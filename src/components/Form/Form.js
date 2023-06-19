@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import classes from "./Form.module.css";
 
 const Form = (props) => {
   //WAY 1 - USING SINGLE useStates for Each
@@ -56,7 +57,7 @@ const durationChangeHandler = (event) => {
     setUserInput((prevInput) => {
       return {
         ...prevInput,
-        [input]: value,
+        [input]: +value,
       };
     });
   };
@@ -64,14 +65,10 @@ const durationChangeHandler = (event) => {
   //FUNCTION CALCULATE
   const submitHandler = (event) => {
     event.preventDefault();
-
     props.onCalculate(userInput);
-
-    reset();
   };
 
   //FUNCTION RESET
-
   //WAY 1
   // const reset = () => {
   //   setCurrentSavings("");
@@ -79,7 +76,6 @@ const durationChangeHandler = (event) => {
   //   setExpectedReturn("");
   //   setDuration("");
   // };
-
   //WAY 2
   const reset = () => {
     setUserInput({
@@ -88,11 +84,13 @@ const durationChangeHandler = (event) => {
       "expected-return": 7,
       duration: 10,
     });
+
+    props.onReset();
   };
 
   return (
-    <form className="form" onSubmit={submitHandler}>
-      <div className="input-group">
+    <form className={classes.form} onSubmit={submitHandler}>
+      <div className={classes["input-group"]}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
           <input
@@ -120,7 +118,7 @@ const durationChangeHandler = (event) => {
           />
         </p>
       </div>
-      <div className="input-group">
+      <div className={classes["input-group"]}>
         <p>
           <label htmlFor="expected-return">
             Expected Interest (%, per year)
@@ -148,11 +146,11 @@ const durationChangeHandler = (event) => {
           />
         </p>
       </div>
-      <p className="actions">
-        <button type="reset" className="buttonAlt" onClick={reset}>
+      <p className={classes.actions}>
+        <button type="reset" className={classes.buttonAlt} onClick={reset}>
           Reset
         </button>
-        <button type="submit" className="button">
+        <button type="submit" className={classes.button}>
           Calculate
         </button>
       </p>
